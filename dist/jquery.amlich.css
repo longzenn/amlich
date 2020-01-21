@@ -29,7 +29,7 @@
 .amlich .calendar-b-left,
 .amlich .calendar-b-right { text-align: center; padding: 12px 0; font-size: 11px; }
 .amlich .calendar-day { text-align: center; font-weight: bold; }
-.amlich .calendar-day .day-num { font-size: 80px; font-family: Roboto, sans-serif; line-height: 100%; color: #31708f; }
+.amlich .calendar-day .day-num { font-size: 80px; font-family: Roboto, sans-serif; line-height: 1.2; color: #31708f; }
 .amlich .lunar-day-num { font-size: 44px; line-height: 100%; font-weight: bold; color: #3c763d; }
 .amlich .calendar-holiday,
 .amlich .calendar-hoangdao { padding: 8px 4px; font-size: 13px; text-align: center; }
