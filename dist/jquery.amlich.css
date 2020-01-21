@@ -9,7 +9,7 @@
   margin-right: auto;
   border: 1px solid #eee;
 }
-.calendar { font-size: 12px; }
+.calendar { font-size: 14px; }
 .calendar td { background-color: #e9eff3;  }
 .calendar-month {
   background-color: #1e8cbe !important;
