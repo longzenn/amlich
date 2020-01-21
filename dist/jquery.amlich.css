@@ -9,6 +9,11 @@
   margin-left: auto;
   margin-right: auto;
 }
+@media screen and (max-width: 640px) {
+  .main {
+    max-width: 100%;
+  }
+}
 .calendar { font-size: 12px; }
 .calendar td { background-color: #e9eff3;  }
 .calendar-month {
