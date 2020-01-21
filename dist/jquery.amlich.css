@@ -13,7 +13,7 @@
 .calendar td { background-color: #e9eff3;  }
 .calendar-month {
   background-color: #1e8cbe !important;
-  color: #fff; text-shadow: 0px 0px 3px #000;
+  color: #fff;
   padding: 6px; font-weight: bold; text-transform: uppercase;
   font-size: 16px !important;
 }
@@ -45,7 +45,7 @@
   color: #fff;
   font-weight: bold;
 }
-.amlich .tenthang { text-shadow: 0px 0px 3px #000; }
+.amlich .tenthang { /*text-shadow: 0px 0px 3px #000;*/ }
 .amlich .navi-l { font-size: 14px; }
 .amlich .navi-r { font-size: 14px; }
 .amlich .ngaytuan {
