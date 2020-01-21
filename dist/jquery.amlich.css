@@ -1,8 +1,3 @@
-@media screen and (max-width: 640px) {
-  .main {
-    width: 100%;
-  }
-}
 .amlich {
   border-collapse: collapse;
   font-size: 14px;
@@ -95,3 +90,8 @@
 .amlich .t7 { font-weight: bold; text-align: left; color: blue; }
 .amlich .cn { font-weight: bold; text-align: left; color: red; }
 span { line-height: 1.4; }
+@media screen and (max-width: 640px) {
+  .main {
+    width: 100%;
+  }
+}
