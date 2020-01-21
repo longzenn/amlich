@@ -1,18 +1,17 @@
+@media screen and (max-width: 640px) {
+  .main {
+    width: 100%;
+  }
+}
 .amlich {
   border-collapse: collapse;
   font-size: 14px;
   font-family: Roboto, sans-serif;
 }
 .main {
-  max-width:640px;
-  width: 100%;
+  width: 640px;
   margin-left: auto;
   margin-right: auto;
-}
-@media screen and (max-width: 640px) {
-  .main {
-    max-width: 100%;
-  }
 }
 .calendar { font-size: 12px; }
 .calendar td { background-color: #e9eff3;  }
