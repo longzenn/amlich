@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title>Tính Tuổi, Mệnh & Cung Hoàng Đạo</title>
+  <style>
+    :root {
+      --primary: #d16ba5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+	
+	html {
+	  height: 100%;
+	}
+
+    body {
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      background: linear-gradient(to right bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+      margin: 0;
+      padding: 40px;
+      color: #4e342e;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fdfbfb;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      padding: 30px 40px;
+      animation: popIn 0.6s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 30px;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 2px solid #8aa7ec;
+      border-radius: 10px;
+      transition: border-color 0.3s;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .result {
+      background: linear-gradient(120deg, #ebedee 0%, #fdfbfb 100%);
+      padding: 20px 30px;
+      /*border-left: 5px solid var(--primary);*/
+	  border: 1px solid #ebedee;
+      border-radius: 10px;
+      /*box-shadow: 0 5px 15px rgba(0,0,0,0.1);*/
+      animation: fadeInResult 0.6s ease-in;
+    }
+
+    @keyframes fadeInResult {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .result p {
+      margin: 10px 0;
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔮 Tính Tuổi</h1>
+    <label for="birthday">Nhập ngày sinh (dd/mm/yyyy):</label>
+    <input type="text" id="birthday" placeholder="VD: 25/12/1990" oninput="calculate()" />
+    <div class="result" id="result" style="display: none;"></div>
+  </div>
+
+  <script>
+    const sixtyHoaGiap = [
+	  { canchi: "Giáp Tý", menh: "Hải Trung Kim" },
+      { canchi: "Ất Sửu", menh: "Hải Trung Kim" },
+      { canchi: "Bính Dần", menh: "Lư Trung Hỏa" },
+      { canchi: "Đinh Mão", menh: "Lư Trung Hỏa" },
+      { canchi: "Mậu Thìn", menh: "Đại Lâm Mộc" },
+      { canchi: "Kỷ Tỵ", menh: "Đại Lâm Mộc" },
+      { canchi: "Canh Ngọ", menh: "Lộ Bàng Thổ" },
+      { canchi: "Tân Mùi", menh: "Lộ Bàng Thổ" },
+      { canchi: "Nhâm Thân", menh: "Kiếm Phong Kim" },
+      { canchi: "Quý Dậu", menh: "Kiếm Phong Kim" },
+      { canchi: "Giáp Tuất", menh: "Sơn Đầu Hỏa" },
+      { canchi: "Ất Hợi", menh: "Sơn Đầu Hỏa" },
+      { canchi: "Bính Tý", menh: "Giản Hạ Thủy" },
+      { canchi: "Đinh Sửu", menh: "Giản Hạ Thủy" },
+      { canchi: "Mậu Dần", menh: "Thành Đầu Thổ" },
+      { canchi: "Kỷ Mão", menh: "Thành Đầu Thổ" },
+      { canchi: "Canh Thìn", menh: "Bạch Lạp Kim" },
+      { canchi: "Tân Tỵ", menh: "Bạch Lạp Kim" },
+      { canchi: "Nhâm Ngọ", menh: "Dương Liễu Mộc" },
+      { canchi: "Quý Mùi", menh: "Dương Liễu Mộc" },
+      { canchi: "Giáp Thân", menh: "Tuyền Trung Thủy" },
+      { canchi: "Ất Dậu", menh: "Tuyền Trung Thủy" },
+      { canchi: "Bính Tuất", menh: "Ốc Thượng Thổ" },
+      { canchi: "Đinh Hợi", menh: "Ốc Thượng Thổ" },
+      { canchi: "Mậu Tý", menh: "Tích Lịch Hỏa" },
+      { canchi: "Kỷ Sửu", menh: "Tích Lịch Hỏa" },
+      { canchi: "Canh Dần", menh: "Tùng Bách Mộc" },
+      { canchi: "Tân Mão", menh: "Tùng Bách Mộc" },
+      { canchi: "Nhâm Thìn", menh: "Trường Lưu Thủy" },
+      { canchi: "Quý Tỵ", menh: "Trường Lưu Thủy" },
+      { canchi: "Giáp Ngọ", menh: "Sa Trung Kim" },
+      { canchi: "Ất Mùi", menh: "Sa Trung Kim" },
+      { canchi: "Bính Thân", menh: "Sơn Hạ Hỏa" },
+      { canchi: "Đinh Dậu", menh: "Sơn Hạ Hỏa" },
+      { canchi: "Mậu Tuất", menh: "Bình Địa Mộc" },
+      { canchi: "Kỷ Hợi", menh: "Bình Địa Mộc" },
+      { canchi: "Canh Tý", menh: "Bích Thượng Thổ" },
+      { canchi: "Tân Sửu", menh: "Bích Thượng Thổ" },
+      { canchi: "Nhâm Dần", menh: "Kim Bạch Kim" },
+      { canchi: "Quý Mão", menh: "Kim Bạch Kim" },
+      { canchi: "Giáp Thìn", menh: "Phúc Đăng Hỏa" },
+      { canchi: "Ất Tỵ", menh: "Phúc Đăng Hỏa" },
+      { canchi: "Bính Ngọ", menh: "Thiên Hà Thủy" },
+      { canchi: "Đinh Mùi", menh: "Thiên Hà Thủy" },
+      { canchi: "Mậu Thân", menh: "Đại Trạch Thổ" },
+      { canchi: "Kỷ Dậu", menh: "Đại Trạch Thổ" },
+      { canchi: "Canh Tuất", menh: "Thoa Xuyến Kim" },
+      { canchi: "Tân Hợi", menh: "Thoa Xuyến Kim" },
+      { canchi: "Nhâm Tý", menh: "Tang Đố Mộc" },
+      { canchi: "Quý Sửu", menh: "Tang Đố Mộc" },
+      { canchi: "Giáp Dần", menh: "Đại Khê Thủy" },
+      { canchi: "Ất Mão", menh: "Đại Khê Thủy" },
+      { canchi: "Bính Thìn", menh: "Sa Trung Thổ" },
+      { canchi: "Đinh Tỵ", menh: "Sa Trung Thổ" },
+      { canchi: "Mậu Ngọ", menh: "Thiên Thượng Hỏa" },
+      { canchi: "Kỷ Mùi", menh: "Thiên Thượng Hỏa" },
+      { canchi: "Canh Thân", menh: "Thạch Lựu Mộc" },
+      { canchi: "Tân Dậu", menh: "Thạch Lựu Mộc" },
+      { canchi: "Nhâm Tuất", menh: "Đại Hải Thủy" },
+      { canchi: "Quý Hợi", menh: "Đại Hải Thủy" },
+	];
+
+    function getZodiacSign(day, month) {
+      const zodiac = [
+	    { sign: "Ma Kết", from: [22, 12], to: [19, 1] },
+        { sign: "Bảo Bình", from: [20, 1], to: [18, 2] },
+        { sign: "Song Ngư", from: [19, 2], to: [20, 3] },
+        { sign: "Bạch Dương", from: [21, 3], to: [19, 4] },
+        { sign: "Kim Ngưu", from: [20, 4], to: [20, 5] },
+        { sign: "Song Tử", from: [21, 5], to: [20, 6] },
+        { sign: "Cự Giải", from: [21, 6], to: [22, 7] },
+        { sign: "Sư Tử", from: [23, 7], to: [22, 8] },
+        { sign: "Xử Nữ", from: [23, 8], to: [22, 9] },
+        { sign: "Thiên Bình", from: [23, 9], to: [22, 10] },
+        { sign: "Bọ Cạp", from: [23, 10], to: [21, 11] },
+        { sign: "Nhân Mã", from: [22, 11], to: [21, 12] },
+	  ];
+	  for (const z of zodiac) {
+        const [fromD, fromM] = z.from;
+        const [toD, toM] = z.to;
+        if (
+          (month === fromM && day >= fromD) ||
+          (month === toM && day <= toD)
+        ) {
+          return z.sign;
+        }
+      }
+      return "Không xác định";
+    }
+
+    function calculate() {
+      const input = document.getElementById("birthday").value.trim();
+      const resultDiv = document.getElementById("result");
+      const match = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (!match) return resultDiv.style.display = "none";
+
+      const [_, d, m, y] = match.map(Number);
+      const birthDate = new Date(`${y}-${m}-${d}`);
+      if (isNaN(birthDate)) return resultDiv.style.display = "none";
+
+      const today = new Date();
+      let ageYears = today.getFullYear() - y;
+      let ageMonths = today.getMonth() - (m - 1);
+      if (today.getDate() < d) ageMonths--;
+      if (ageMonths < 0) { ageYears--; ageMonths += 12; }
+      const tuoiAm = today.getFullYear() - y + 1;
+
+      const index60 = (y - 1864) % 60;
+      const hoaGiap = sixtyHoaGiap[index60];
+      const conGiap = hoaGiap?.canchi.split(" ")[1] || "Không rõ";
+      const zodiac = getZodiacSign(d, m);
+
+      resultDiv.innerHTML = `
+        <p><strong>Tuổi dương lịch:</strong> ${ageYears} tuổi ${ageMonths} tháng</p>
+        <p><strong>Tuổi âm lịch:</strong> ${tuoiAm} tuổi</p>
+        <p><strong>Con giáp:</strong> ${conGiap}</p>
+        <p><strong>Can Chi:</strong> ${hoaGiap?.canchi || "Không rõ"}</p>
+        <p><strong>Mệnh:</strong> ${hoaGiap?.menh || "Không rõ"}</p>
+        <p><strong>Cung hoàng đạo:</strong> ${zodiac}</p>
+      `;
+      resultDiv.style.display = "block";
+    }
+  </script>
+</body>
+</html>
